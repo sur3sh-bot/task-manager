@@ -11,7 +11,7 @@ let tasks = [
   { id: 2, title: "Eat Lunch", completed: true }
 ];
 
-// --- ROUTES ---
+
 
 // 1. GET ALL TASKS (Read)
 app.get('/tasks', (req, res) => {
