@@ -46,7 +46,7 @@ app.put('/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const task = tasks.find(t => t.id === id);
 
-  if (!task) return res.status(404).send("Task not found.");
+  if (!task) return res.status(404).send("Task not found."); // Check if task exists
 
   task.title = req.body.title || task.title;
   task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
