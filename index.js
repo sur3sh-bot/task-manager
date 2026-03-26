@@ -11,7 +11,6 @@ let tasks = [
   { id: 2, title: "Eat Lunch", completed: true }
 ];
 
-
 // 1. GET ALL TASKS (Read)
 app.get('/tasks', (req, res) => {
   res.json(tasks);
