@@ -64,4 +64,4 @@ app.delete('/tasks/:id', (req, res) => {
 // START THE SERVER
 app.listen(PORT, () => {
   console.log(`TaskMaster API is live at http://localhost:${PORT}`);
-});
+}); // This code sets up a simple RESTful API for managing tasks, allowing clients to create, read, update, and delete tasks.
