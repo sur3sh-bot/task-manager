@@ -5,7 +5,7 @@ const PORT = 3000;
 // MIDDLEWARE: This allows our server to read JSON sent in a request body
 app.use(express.json());
 
-// OUR DATA: A simple array acting as a temporary database
+//A simple array acting as a temporary database
 let tasks = [
   { id: 1, title: "Learn Backend Basics", completed: false },
   { id: 2, title: "Eat Lunch", completed: true }
