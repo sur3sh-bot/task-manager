@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
+const path = require('path');
 
-// MIDDLEWARE: This allows our server to read JSON sent in a request body
+app.use(express.static(path.join(__dirname, 'public')));
+
+// MIDDLEWARE
 app.use(express.json());
 
 //A simple array acting as a temporary database
