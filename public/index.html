@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>TaskMaster</title>
+
   <style>
     body {
       font-family: Arial;
@@ -34,6 +35,15 @@
       cursor: pointer;
     }
 
+    .filters {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .filters button {
+      margin: 3px;
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -56,35 +66,52 @@
     }
   </style>
 </head>
+
 <body>
 
 <div class="container">
   <h2>TaskMaster</h2>
 
+  <!-- Add Task -->
   <div>
     <input id="taskInput" placeholder="New task..." />
     <button onclick="addTask()">Add</button>
   </div>
 
+  <!-- Filters (FIXED POSITION) -->
+  <div class="filters">
+    <button onclick="setFilter('all')">All</button>
+    <button onclick="setFilter('completed')">Completed</button>
+    <button onclick="setFilter('pending')">Pending</button>
+  </div>
+
+  <!-- Task List -->
   <ul id="taskList"></ul>
 </div>
 
 <script>
   const API_URL = "http://localhost:3000/tasks";
+  let currentFilter = 'all';
 
-  // Fetch all tasks
+  // Fetch tasks
   async function fetchTasks() {
     const res = await fetch(API_URL);
     const tasks = await res.json();
     renderTasks(tasks);
   }
 
-  // Render tasks
+  // Render tasks with filter
   function renderTasks(tasks) {
     const list = document.getElementById("taskList");
     list.innerHTML = "";
 
-    tasks.forEach(task => {
+    const filteredTasks = tasks.filter(task => {
+      if (currentFilter === 'completed') return task.completed;
+      if (currentFilter === 'pending') return !task.completed;
+      return true;
+    });
+
+    filteredTasks.forEach(task => {
       const li = document.createElement("li");
 
       const title = document.createElement("span");
@@ -114,7 +141,7 @@
     });
   }
 
-  // Add new task
+  // Add task
   async function addTask() {
     const input = document.getElementById("taskInput");
     const title = input.value;
@@ -131,7 +158,7 @@
     fetchTasks();
   }
 
-  // Toggle task completion
+  // Toggle task
   async function toggleTask(task) {
     await fetch(`${API_URL}/${task.id}`, {
       method: "PUT",
@@ -142,12 +169,18 @@
     fetchTasks();
   }
 
-  // Delete task
+  // Delete task (FIXED)
   async function deleteTask(id) {
     await fetch(`${API_URL}/${id}`, {
       method: "DELETE"
     });
 
+    fetchTasks();
+  }
+
+  // Set filter
+  function setFilter(filter) {
+    currentFilter = filter;
     fetchTasks();
   }
 
