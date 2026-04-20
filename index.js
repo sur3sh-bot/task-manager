@@ -45,7 +45,7 @@ const newTask = {
   id: Date.now(),
   title: req.body.title,
   completed: false,
-  dueDate: req.body.dueDate || null   // ✅ ADD THIS
+  dueDate: req.body.dueDate || null  
 };
 
 // 4. UPDATE A TASK (Update)
@@ -57,6 +57,7 @@ app.put('/tasks/:id', (req, res) => {
 
   task.title = req.body.title || task.title;
   task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
+  task.dueDate = req.body.dueDate || task.dueDate;
 
   res.json(task);
 });
