@@ -41,6 +41,12 @@ app.post('/tasks', (req, res) => {
   tasks.push(newTask);
   res.status(201).json(newTask);
 });
+const newTask = {
+  id: Date.now(),
+  title: req.body.title,
+  completed: false,
+  dueDate: req.body.dueDate || null   // ✅ ADD THIS
+};
 
 // 4. UPDATE A TASK (Update)
 app.put('/tasks/:id', (req, res) => {
