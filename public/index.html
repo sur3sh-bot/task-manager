@@ -141,21 +141,22 @@
 
   // Add task
   async function addTask() {
-    const input = document.getElementById("taskInput");
-    const title = input.value;
+  const input = document.getElementById("taskInput");
+  const title = input.value;
+  const dueDate = document.getElementById("dueDateInput").value; // ✅ added
 
-    if (!title) return alert("Enter a task!");
+  if (!title) return alert("Enter a task!");
 
-    await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title })
-    });
+  await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title, dueDate }) // ✅ updated
+  });
 
-    input.value = "";
-    fetchTasks();
-  }
-
+  input.value = "";
+  document.getElementById("dueDateInput").value = ""; // optional reset
+  fetchTasks();
+}
   // Toggle task
   async function toggleTask(task) {
     await fetch(`${API_URL}/${task.id}`, {
