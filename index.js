@@ -30,34 +30,27 @@ app.get('/tasks/:id', (req, res) => {
 
 // 3. CREATE A NEW TASK (Create)
 app.post('/tasks', (req, res) => {
-  if (!req.body.title) return res.status(400).send("Title is required!");
-
   const newTask = {
-    id: tasks.length + 1,
-    title: req.body.title,
-    completed: false
+    id: Date.now(),
+    title: req.body.title,          // ✅ valid here
+    completed: false,
+    dueDate: req.body.dueDate || null
   };
 
   tasks.push(newTask);
   res.status(201).json(newTask);
 });
-const newTask = {
-  id: Date.now(),
-  title: req.body.title,
-  completed: false,
-  dueDate: req.body.dueDate || null  
-};
 
 // 4. UPDATE A TASK (Update)
 app.put('/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const task = tasks.find(t => t.id === id);
 
-  if (!task) return res.status(404).send("Task not found."); // Check if task exists
+  if (!task) return res.status(404).send("Task not found.");
 
   task.title = req.body.title || task.title;
   task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
-  task.dueDate = req.body.dueDate || task.dueDate;
+  task.dueDate = req.body.dueDate || task.dueDate; // ✅ MUST BE HERE
 
   res.json(task);
 });
