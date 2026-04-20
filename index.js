@@ -32,7 +32,7 @@ app.get('/tasks/:id', (req, res) => {
 app.post('/tasks', (req, res) => {
   const newTask = {
     id: Date.now(),
-    title: req.body.title,          // ✅ valid here
+    title: req.body.title,         
     completed: false,
     dueDate: req.body.dueDate || null
   };
@@ -50,7 +50,7 @@ app.put('/tasks/:id', (req, res) => {
 
   task.title = req.body.title || task.title;
   task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
-  task.dueDate = req.body.dueDate || task.dueDate; // ✅ MUST BE HERE
+  task.dueDate = req.body.dueDate || task.dueDate; 
 
   res.json(task);
 });
