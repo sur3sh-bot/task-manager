@@ -154,14 +154,14 @@ color: white;
   async function addTask() {
   const input = document.getElementById("taskInput");
   const title = input.value;
-  const dueDate = document.getElementById("dueDateInput").value; // ✅ added
+  const dueDate = document.getElementById("dueDateInput").value; 
 
   if (!title) return alert("Enter a task!");
 
   await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title, dueDate }) // ✅ updated
+    body: JSON.stringify({ title, dueDate })
   });
 
   input.value = "";
