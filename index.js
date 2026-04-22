@@ -66,9 +66,9 @@ app.put('/tasks/:id', (req, res) => {
 
   if (!task) return res.status(404).send("Task not found.");
 
-  task.title = req.body.title || task.title;
+  task.title = req.body.title !== undefined ? req.body.title : task.title;
   task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
-  task.dueDate = req.body.dueDate || task.dueDate; 
+  task.dueDate = req.body.dueDate !== undefined ? req.body.dueDate : task.dueDate; 
 
   saveTasks(tasks);
   res.json(task);
