@@ -185,6 +185,7 @@
 
     .filters {
       display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       padding: 4px;
       border: 1px solid var(--border);
@@ -451,6 +452,9 @@
         <div class="filters" aria-label="Task filters">
           <button class="filter-btn active" type="button" data-filter="all">All</button>
           <button class="filter-btn" type="button" data-filter="pending">Pending</button>
+          <button class="filter-btn" type="button" data-filter="today">Today</button>
+          <button class="filter-btn" type="button" data-filter="overdue">Overdue</button>
+          <button class="filter-btn" type="button" data-filter="upcoming">Upcoming</button>
           <button class="filter-btn" type="button" data-filter="completed">Done</button>
         </div>
       </div>
@@ -514,11 +518,7 @@
       taskList.innerHTML = "";
       updateStats(tasks);
 
-      const filteredTasks = tasks.filter(task => {
-        if (currentFilter === "completed") return task.completed;
-        if (currentFilter === "pending") return !task.completed;
-        return true;
-      });
+      const filteredTasks = tasks.filter(matchesCurrentFilter);
 
       if (filteredTasks.length === 0) {
         taskList.appendChild(createEmptyState());
@@ -528,6 +528,17 @@
       filteredTasks
         .sort(compareTasks)
         .forEach(task => taskList.appendChild(createTaskElement(task)));
+    }
+
+    function matchesCurrentFilter(task) {
+      const today = getTodayDateKey();
+
+      if (currentFilter === "completed") return task.completed;
+      if (currentFilter === "pending") return !task.completed;
+      if (currentFilter === "today") return !task.completed && task.dueDate === today;
+      if (currentFilter === "overdue") return isOverdue(task);
+      if (currentFilter === "upcoming") return !task.completed && task.dueDate && task.dueDate > today;
+      return true;
     }
 
     function compareTasks(a, b) {
@@ -772,8 +783,17 @@
     }
 
     function isOverdue(task) {
-      const today = new Date().toISOString().split("T")[0];
+      const today = getTodayDateKey();
       return task.dueDate && task.dueDate < today && !task.completed;
+    }
+
+    function getTodayDateKey() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
     }
 
     function formatDate(date) {
