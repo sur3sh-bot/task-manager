@@ -561,7 +561,7 @@
       const checkBtn = document.createElement("button");
       checkBtn.className = `task-check ${task.completed ? "done" : ""}`;
       checkBtn.type = "button";
-      checkBtn.textContent = task.completed ? "✓" : "";
+      checkBtn.textContent = task.completed ? "\u2713" : "";
       checkBtn.title = task.completed ? "Mark as pending" : "Mark as done";
       checkBtn.onclick = () => toggleTask(task);
 
