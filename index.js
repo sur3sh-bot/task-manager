@@ -33,7 +33,7 @@ app.get('/tasks', (req, res) => {
   res.json(tasks);
 });
 
-// 2. GET A SINGLE TASK (Read specific)
+// 2. GET A SINGLE TASK
 app.get('/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const tasks = readTasks();
