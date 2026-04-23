@@ -43,7 +43,7 @@ app.get('/tasks/:id', (req, res) => {
   res.json(task);
 });
 
-// 3. CREATE A NEW TASK (Create)
+// 3. CREATE A NEW TASK
 app.post('/tasks', (req, res) => {
   const tasks = readTasks();
   const newTask = {
