@@ -27,7 +27,7 @@ function saveTasks(tasks) {
   fs.writeFileSync(tasksFilePath, JSON.stringify(tasks, null, 2));
 }
 
-// 1. GET ALL TASKS (Read)
+// 1. GET ALL TASKS
 app.get('/tasks', (req, res) => {
   const tasks = readTasks();
   res.json(tasks);
