@@ -74,7 +74,7 @@ app.put('/tasks/:id', (req, res) => {
   res.json(task);
 });
 
-// 5. DELETE A TASK (Delete)
+// 5. DELETE A TASK
 app.delete('/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const tasks = readTasks();
