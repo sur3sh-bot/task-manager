@@ -58,7 +58,7 @@ app.post('/tasks', (req, res) => {
   res.status(201).json(newTask);
 });
 
-// 4. UPDATE A TASK (Update)
+// 4. UPDATE A TASK
 app.put('/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const tasks = readTasks();
