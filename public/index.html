@@ -619,14 +619,13 @@
     }
 
     function compareTasks(a, b) {
-      const dateComparison = compareDueDates(a.dueDate, b.dueDate);
-
-      if (dateComparison !== 0) {
-        return dateComparison;
-      }
-
       if (a.completed !== b.completed) {
         return Number(a.completed) - Number(b.completed);
+      }
+
+      const dateComparison = compareDueDates(a.dueDate, b.dueDate);
+      if (dateComparison !== 0) {
+        return dateComparison;
       }
 
       return a.id - b.id;
