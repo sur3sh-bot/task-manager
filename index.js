@@ -8,7 +8,7 @@ const tasksFilePath = path.join(__dirname, 'tasks.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// MIDDLEWARE
+// MIDDLEWARE.
 app.use(express.json());
 
 function readTasks() {
