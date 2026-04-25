@@ -9,6 +9,8 @@
     :root {
       --bg: #f5f7fb;
       --panel: #ffffff;
+      --panel-alt: #fbfcff;
+      --input-bg: #ffffff;
       --text: #19202e;
       --muted: #667085;
       --border: #dde3ee;
@@ -18,6 +20,36 @@
       --danger: #d92d20;
       --warning: #b54708;
       --shadow: 0 18px 45px rgba(31, 41, 55, 0.12);
+
+      --tag-bg: #eef2f7;
+      --tag-overdue-bg: #fff1eb;
+      --tag-done-bg: #eaf7f0;
+      --danger-bg: #fff1f0;
+      --filters-bg: #f7f9fc;
+      --date-pill-bg: rgba(255, 255, 255, 0.75);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --panel-alt: #0f172a;
+      --input-bg: #0f172a;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+      --primary: #3b82f6;
+      --primary-dark: #60a5fa;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+
+      --tag-bg: #334155;
+      --tag-overdue-bg: rgba(239, 68, 68, 0.15);
+      --tag-done-bg: rgba(16, 185, 129, 0.15);
+      --danger-bg: rgba(239, 68, 68, 0.1);
+      --filters-bg: #0f172a;
+      --date-pill-bg: rgba(30, 41, 59, 0.75);
     }
 
     * {
@@ -73,7 +105,7 @@
       flex: 0 0 auto;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.75);
+      background: var(--date-pill-bg);
       padding: 10px 14px;
       color: var(--muted);
       font-size: 14px;
@@ -94,7 +126,7 @@
       gap: 12px;
       padding: 18px;
       border-bottom: 1px solid var(--border);
-      background: #fbfcff;
+      background: var(--panel-alt);
     }
 
     input {
@@ -102,7 +134,7 @@
       min-height: 44px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: #ffffff;
+      background: var(--input-bg);
       color: var(--text);
       font: inherit;
       padding: 0 13px;
@@ -165,7 +197,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 10px 12px;
-      background: #ffffff;
+      background: var(--panel);
     }
 
     .stat strong {
@@ -190,7 +222,7 @@
       padding: 4px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: #f7f9fc;
+      background: var(--filters-bg);
     }
 
     .filter-btn {
@@ -203,9 +235,9 @@
 
     .filter-btn.active {
       border-color: var(--border);
-      background: #ffffff;
+      background: var(--panel);
       color: var(--text);
-      box-shadow: 0 5px 12px rgba(31, 41, 55, 0.08);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
     }
 
     .message {
@@ -214,7 +246,7 @@
       padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       color: var(--danger);
-      background: #fff4f2;
+      background: var(--danger-bg);
       font-weight: 700;
     }
 
@@ -251,7 +283,7 @@
       min-height: 30px;
       border: 2px solid var(--border);
       border-radius: 50%;
-      background: #ffffff;
+      background: var(--panel);
       color: transparent;
       line-height: 1;
     }
@@ -296,24 +328,24 @@
 
     .tag {
       border-radius: 999px;
-      background: #eef2f7;
+      background: var(--tag-bg);
       padding: 4px 9px;
       font-weight: 700;
     }
 
     .tag.overdue {
-      background: #fff1eb;
+      background: var(--tag-overdue-bg);
       color: var(--danger);
     }
 
     .tag.done {
-      background: #eaf7f0;
+      background: var(--tag-done-bg);
       color: var(--success);
     }
 
     .delete-btn {
       min-width: 82px;
-      background: #fff1f0;
+      background: var(--danger-bg);
       color: var(--danger);
       padding: 0 13px;
     }
@@ -327,7 +359,7 @@
 
     .edit-btn {
       border: 1px solid var(--border);
-      background: #ffffff;
+      background: var(--panel);
       color: var(--text);
     }
 
@@ -338,7 +370,7 @@
 
     .cancel-btn {
       border: 1px solid var(--border);
-      background: #ffffff;
+      background: var(--panel);
       color: var(--muted);
     }
 
@@ -353,6 +385,25 @@
       margin-bottom: 7px;
       color: var(--text);
       font-size: 18px;
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--tag-bg);
+      color: var(--text);
     }
 
     @media (max-width: 720px) {
@@ -423,7 +474,12 @@
         <h1>TaskMaster</h1>
         <p class="subtitle">Plan your tasks, track due dates, and keep completed work out of your way.</p>
       </div>
-      <div class="date-pill" id="todayLabel"></div>
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end;">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+          🌙
+        </button>
+        <div class="date-pill" id="todayLabel"></div>
+      </div>
     </section>
 
     <section class="panel">
@@ -476,6 +532,27 @@
     const pendingCount = document.getElementById("pendingCount");
     const doneCount = document.getElementById("doneCount");
     const todayLabel = document.getElementById("todayLabel");
+    const themeToggle = document.getElementById("themeToggle");
+
+    // Theme logic
+    const currentTheme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    if (currentTheme === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+      themeToggle.textContent = "☀️";
+    }
+
+    themeToggle.addEventListener("click", () => {
+      let theme = document.documentElement.getAttribute("data-theme");
+      if (theme === "dark") {
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("theme", "light");
+        themeToggle.textContent = "🌙";
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+        themeToggle.textContent = "☀️";
+      }
+    });
 
     let currentFilter = "all";
     let tasksCache = [];
