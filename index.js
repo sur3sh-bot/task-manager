@@ -4,7 +4,7 @@ const PORT = 3000; //port number
 const path = require('path'); //path module
 const fs = require('fs'); //file system module
 
-const tasksFilePath = path.join(__dirname, 'tasks.json');
+const tasksFilePath = path.join(__dirname, 'tasks.json'); //path to tasks.json
 
 app.use(express.static(path.join(__dirname, 'public')));
 
