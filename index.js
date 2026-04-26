@@ -1,5 +1,5 @@
 const express = require('express'); //backend framework
-const app = express();
+const app = express(); //web framework 
 const PORT = 3000;
 const path = require('path');
 const fs = require('fs');
