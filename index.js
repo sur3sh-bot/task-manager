@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); //backend framework
 const app = express();
 const PORT = 3000;
 const path = require('path');
