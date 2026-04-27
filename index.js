@@ -75,7 +75,7 @@ app.put('/tasks/:id', (req, res) => {
 });
 
 // 5. DELETE A TASK
-app.delete('/tasks/:id', (req, res) => {  //
+app.delete('/tasks/:id', (req, res) => {  //deletes a task
   const id = parseInt(req.params.id);
   const tasks = readTasks();
   const taskExists = tasks.some(t => t.id === id);
