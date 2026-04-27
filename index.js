@@ -59,7 +59,7 @@ app.post('/tasks', (req, res) => {
 });
 
 // 4. UPDATE A TASK
-app.put('/tasks/:id', (req, res) => {
+app.put('/tasks/:id', (req, res) => { //updates a task
   const id = parseInt(req.params.id);
   const tasks = readTasks();
   const task = tasks.find(t => t.id === id);
