@@ -34,7 +34,7 @@ app.get('/tasks', (req, res) => {
 });
 
 // 2. GET A SINGLE TASK
-app.get('/tasks/:id', (req, res) => {
+app.get('/tasks/:id', (req, res) => { //
   const id = parseInt(req.params.id);
   const tasks = readTasks();
   const task = tasks.find(t => t.id === id);
@@ -44,7 +44,7 @@ app.get('/tasks/:id', (req, res) => {
 });
 
 // 3. CREATE A NEW TASK
-app.post('/tasks', (req, res) => {
+app.post('/tasks', (req, res) => {  //creates a new task
   const tasks = readTasks();
   const newTask = {
     id: Date.now(),
