@@ -34,7 +34,7 @@ app.get('/tasks', (req, res) => {
 });
 
 // 2. GET A SINGLE TASK
-app.get('/tasks/:id', (req, res) => { //
+app.get('/tasks/:id', (req, res) => { //gets a single task 
   const id = parseInt(req.params.id);
   const tasks = readTasks();
   const task = tasks.find(t => t.id === id);
