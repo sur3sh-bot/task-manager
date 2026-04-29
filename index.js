@@ -84,7 +84,7 @@ app.delete('/tasks/:id', (req, res) => {  //deletes a task
 
   const updatedTasks = tasks.filter(t => t.id !== id);
   saveTasks(updatedTasks);
-  res.send(`Task ${id} deleted successfully.`);
+  res.send(`Task ${id} deleted successfully.`); //this runs the server 
 });
 
 // START THE SERVER
