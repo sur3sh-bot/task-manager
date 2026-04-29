@@ -6,7 +6,7 @@ const fs = require('fs'); //file system module
 
 const tasksFilePath = path.join(__dirname, 'tasks.json'); //path to tasks.json 
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); //this serves the static files 
 
 // MIDDLEWARE
 app.use(express.json());
@@ -20,7 +20,7 @@ function readTasks() {
   }
 
   const data = fs.readFileSync(tasksFilePath, 'utf8');
-  return JSON.parse(data);
+  return JSON.parse(data); 
 }
 
 function saveTasks(tasks) {
