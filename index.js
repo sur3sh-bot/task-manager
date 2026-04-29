@@ -14,8 +14,8 @@ app.use(express.json());
 function readTasks() {
   if (!fs.existsSync(tasksFilePath)) {
     return [
-      { id: 1, title: "Learn Backend Basics", completed: false, dueDate: null },
-      { id: 2, title: "Eat Lunch", completed: true, dueDate: null }
+      { id: 1, title: "Learn Backend Basics", completed: false, dueDate: null, priority: "High" },
+      { id: 2, title: "Eat Lunch", completed: true, dueDate: null, priority: "Medium" }
     ];
   }
 
@@ -50,7 +50,8 @@ app.post('/tasks', (req, res) => {  //creates a new task
     id: Date.now(),
     title: req.body.title,         
     completed: false,
-    dueDate: req.body.dueDate || null
+    dueDate: req.body.dueDate || null,
+    priority: req.body.priority || 'Medium'
   };
 
   tasks.push(newTask);
@@ -69,6 +70,7 @@ app.put('/tasks/:id', (req, res) => { //updates a task
   task.title = req.body.title !== undefined ? req.body.title : task.title;
   task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
   task.dueDate = req.body.dueDate !== undefined ? req.body.dueDate : task.dueDate; 
+  task.priority = req.body.priority !== undefined ? req.body.priority : task.priority;
 
   saveTasks(tasks);
   res.json(task);

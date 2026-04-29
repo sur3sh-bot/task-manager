@@ -122,14 +122,14 @@
 
     .composer {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 170px auto;
+      grid-template-columns: minmax(0, 1fr) 110px 170px auto;
       gap: 12px;
       padding: 18px;
       border-bottom: 1px solid var(--border);
       background: var(--panel-alt);
     }
 
-    input {
+    input, select {
       width: 100%;
       min-height: 44px;
       border: 1px solid var(--border);
@@ -141,7 +141,7 @@
       outline: none;
     }
 
-    input:focus {
+    input:focus, select:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
     }
@@ -330,12 +330,12 @@
 
     .edit-form {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 160px auto auto;
+      grid-template-columns: minmax(0, 1fr) 110px 160px auto auto;
       gap: 10px;
       align-items: center;
     }
 
-    .edit-form input {
+    .edit-form input, .edit-form select {
       min-height: 40px;
     }
 
@@ -361,6 +361,21 @@
     }
 
     .tag.done {
+      background: var(--tag-done-bg);
+      color: var(--success);
+    }
+
+    .tag.priority-High {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .tag.priority-Medium {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warning);
+    }
+
+    .tag.priority-Low {
       background: var(--tag-done-bg);
       color: var(--success);
     }
@@ -507,6 +522,11 @@
     <section class="panel">
       <form class="composer" id="taskForm">
         <input id="taskInput" placeholder="What needs to be done?" autocomplete="off">
+        <select id="priorityInput" aria-label="Priority">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
         <input type="date" id="dueDateInput">
         <button class="primary-btn" type="submit">Add Task</button>
       </form>
@@ -546,6 +566,7 @@
     const API_URL = "/tasks";
     const taskForm = document.getElementById("taskForm");
     const taskInput = document.getElementById("taskInput");
+    const priorityInput = document.getElementById("priorityInput");
     const dueDateInput = document.getElementById("dueDateInput");
     const taskList = document.getElementById("taskList");
     const errorMessage = document.getElementById("errorMessage");
@@ -697,6 +718,11 @@
       status.textContent = task.completed ? "Done" : "Pending";
       meta.appendChild(status);
 
+      const priorityTag = document.createElement("span");
+      priorityTag.className = `tag priority-${task.priority || 'Medium'}`;
+      priorityTag.textContent = task.priority || 'Medium';
+      meta.appendChild(priorityTag);
+
       if (task.dueDate) {
         const dueDate = document.createElement("span");
         dueDate.className = `tag ${isOverdue(task) ? "overdue" : ""}`;
@@ -739,6 +765,15 @@
       titleInput.placeholder = "Task title";
       titleInput.autocomplete = "off";
 
+      const prioritySelect = document.createElement("select");
+      ["Low", "Medium", "High"].forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = p;
+        if ((task.priority || "Medium") === p) opt.selected = true;
+        prioritySelect.appendChild(opt);
+      });
+
       const dueInput = document.createElement("input");
       dueInput.type = "date";
       dueInput.value = task.dueDate || "";
@@ -760,10 +795,11 @@
 
       form.addEventListener("submit", event => {
         event.preventDefault();
-        updateTask(task, titleInput.value.trim(), dueInput.value);
+        updateTask(task, titleInput.value.trim(), prioritySelect.value, dueInput.value);
       });
 
       form.appendChild(titleInput);
+      form.appendChild(prioritySelect);
       form.appendChild(dueInput);
       form.appendChild(saveBtn);
       form.appendChild(cancelBtn);
@@ -783,6 +819,7 @@
       event.preventDefault();
 
       const title = taskInput.value.trim();
+      const priority = priorityInput.value;
       const dueDate = dueDateInput.value;
 
       if (!title) {
@@ -795,7 +832,7 @@
         const res = await fetch(API_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title, dueDate })
+          body: JSON.stringify({ title, priority, dueDate })
         });
 
         if (!res.ok) {
@@ -828,7 +865,7 @@
       }
     }
 
-    async function updateTask(task, title, dueDate) {
+    async function updateTask(task, title, priority, dueDate) {
       if (!title) {
         showError("Enter a task title first.");
         return;
@@ -838,7 +875,7 @@
         const res = await fetch(`${API_URL}/${task.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title, dueDate: dueDate || null })
+          body: JSON.stringify({ title, priority, dueDate: dueDate || null })
         });
 
         if (!res.ok) {
