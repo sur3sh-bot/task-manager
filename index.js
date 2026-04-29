@@ -1,7 +1,7 @@
 const express = require('express'); //backend framework
 const app = express(); //web framework 
 const PORT = 3000; //port number
-const path = require('path'); //path module
+const path = require('path'); //path module 
 const fs = require('fs'); //file system module
 
 const tasksFilePath = path.join(__dirname, 'tasks.json'); //path to tasks.json
